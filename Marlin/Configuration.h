@@ -1270,11 +1270,7 @@
 #define LEVEL_BED_CORNERS
 
 #if ENABLED(LEVEL_BED_CORNERS)
-<<<<<<< HEAD
   #define LEVEL_CORNERS_INSET 30    // (mm) An inset for corner leveling
-=======
-  #define LEVEL_CORNERS_INSET_LFRB { 30, 30, 30, 30 }    // (mm) An inset for corner leveling
->>>>>>> c627c6751... Adopt Marlin configuration to SKR mini E3
   #define LEVEL_CORNERS_Z_HOP  4.0  // (mm) Move nozzle up before moving between corners
   #define LEVEL_CORNERS_HEIGHT 0.0  // (mm) Z height of nozzle at leveling points
   //#define LEVEL_CENTER_TOO        // Move to the center after the last corner

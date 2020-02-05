@@ -28,11 +28,7 @@
 /**
  * Marlin release version identifier
  */
-<<<<<<< HEAD
 //#define SHORT_BUILD_VERSION "2.0.3"
-=======
-//#define SHORT_BUILD_VERSION "2.0.x"
->>>>>>> c627c6751... Adopt Marlin configuration to SKR mini E3
 
 /**
  * Verbose version identifier which should contain a reference to the location
