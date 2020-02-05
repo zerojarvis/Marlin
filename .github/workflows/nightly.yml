@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  schedule:
+    - cron: '0 2 * * *' # run at 2 AM UTC
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        branch: [bugfix-2.0.x]
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.8
+    - name: Merge ${{ matrix.branch }}
+      run: |
+        git checkout ${{ matrix.branch }}
+        git pull https://github.com/MarlinFirmware/Marlin ${{ matrix.branch }}
+        git add *
+        git commit -m "Merged upstream changes from $(date '+%Y-%m-%d')"
+    - name: Commit files
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git commit -m "Add changes" -a
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
