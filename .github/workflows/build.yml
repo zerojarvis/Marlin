@@ -1,0 +1,33 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.8
+    - name: Install pip
+      run: |
+        python -m pip install --upgrade pip
+    - name: Build Marlin
+      run: |
+        pip install platformio
+        ./buildroot/bin/generate_version
+        platformio run
+        cd .pio/build/STM32F103RC_bigtree_512K/
+        mkdir artifacts
+        mv firmware.bin artifacts/
+    - name: Upload firmware
+      uses: actions/upload-artifact@v1.0.0
+      with:
+        # Artifact name
+        name: firmware
+        # Directory containing files to upload
+        path: .pio/build/STM32F103RC_bigtree_512K/artifacts
