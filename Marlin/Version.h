@@ -28,7 +28,11 @@
 /**
  * Marlin release version identifier
  */
+<<<<<<< HEAD
 //#define SHORT_BUILD_VERSION "2.0.3"
+=======
+//#define SHORT_BUILD_VERSION "2.0.x"
+>>>>>>> c627c6751... Adopt Marlin configuration to SKR mini E3
 
 /**
  * Verbose version identifier which should contain a reference to the location
@@ -46,7 +50,7 @@
 /**
  * Defines a generic printer name to be output to the LCD after booting Marlin.
  */
-//#define MACHINE_NAME "3D Printer"
+//#define MACHINE_NAME "Ender 3"
 
 /**
  * The SOURCE_CODE_URL is the location where users will find the Marlin Source
@@ -54,7 +58,7 @@
  * has a distinct Github fork— the Source Code URL should just be the main
  * Marlin repository.
  */
-//#define SOURCE_CODE_URL "https://github.com/MarlinFirmware/Marlin"
+//#define SOURCE_CODE_URL "https://github.com/crysxd/Marlin"
 
 /**
  * Default generic printer UUID.
