@@ -5,11 +5,11 @@ on:
     - cron: '0 10 * * *' # run at 10 AM UTC
 
 jobs:
-  build:
+  merge:
     strategy:
       fail-fast: false
       matrix:
-        branch: [bugfix-2.0.x]
+        branch: [bugfix-2.0.x, 2.0.x]
 
     runs-on: ubuntu-latest
 
@@ -18,21 +18,11 @@ jobs:
       uses: actions/checkout@v2
       with:
         ref: ${{ matrix.branch }}
-    - name: Set up Python
-      uses: actions/setup-python@v1
-      with:
-        python-version: 3.8
     - name: Merge ${{ matrix.branch }}
       run: |
         git pull https://github.com/MarlinFirmware/Marlin ${{ matrix.branch }}
         git add *
-        git commit -m "Merged upstream changes from $(date '+%Y-%m-%d')"
-    - name: Commit files
-      run: |
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
-        git commit -m "Add changes" -a
-    - name: Push changes
-      uses: ad-m/github-push-action@master
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
+        git config user.name "${GITHUB_ACTOR}"
+        git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+        git commit -m "[cron] Merged upstream changes from $(date '+%Y-%m-%d')" -a
+        git push
