@@ -14,12 +14,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Check out bugfix-2.0.x
+    - name: Check out ${{ matrix.branch }}
       uses: actions/checkout@v2
       with:
         ref: ${{ matrix.branch }}
     - name: Merge ${{ matrix.branch }}
       run: |
+        git fetch --unshallow
         git pull https://github.com/MarlinFirmware/Marlin ${{ matrix.branch }}
         git add *
         git config user.name "${GITHUB_ACTOR}"
