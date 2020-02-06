@@ -2,7 +2,7 @@ name: Nightly Build
 
 on:
   schedule:
-    - cron: '0 2 * * *' # run at 2 AM UTC
+    - cron: '0 10 * * *' # run at 10 AM UTC
 
 jobs:
   build:
@@ -14,14 +14,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - name: Check out bugfix-2.0.x
+      uses: actions/checkout@v2
+      with:
+        ref: ${{ matrix.branch }}
     - name: Set up Python
       uses: actions/setup-python@v1
       with:
         python-version: 3.8
     - name: Merge ${{ matrix.branch }}
       run: |
-        git checkout ${{ matrix.branch }}
         git pull https://github.com/MarlinFirmware/Marlin ${{ matrix.branch }}
         git add *
         git commit -m "Merged upstream changes from $(date '+%Y-%m-%d')"
