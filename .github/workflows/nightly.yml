@@ -24,6 +24,4 @@ jobs:
         git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
         git fetch --unshallow
         git pull https://github.com/MarlinFirmware/Marlin ${{ matrix.branch }}
-        git add *
-        git commit -m "[cron] Merged upstream changes from $(date '+%Y-%m-%d')" -a
         git push
