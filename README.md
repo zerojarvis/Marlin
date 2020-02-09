@@ -1,3 +1,32 @@
+# What does this fork do?
+
+![Nightly Release](https://github.com/crysxd/Marlin/workflows/Nightly%20Release/badge.svg)
+![Nightly Merge](https://github.com/crysxd/Marlin/workflows/Nightly%20Build/badge.svg)
+
+This fork of the Marlin project provides nightly firmware builds for the BigTreeTech SKR mini E3 v1.2 by taking the daily changes of the [Marlin project](https://github.com/MarlinFirmware/Marlin) and building thermal with BigTreeTech's default configuration found [here](https://github.com/bigtreetech/BIGTREETECH-SKR-mini-E3).
+
+Daily build [firmware.bin](https://github.com/crysxd/Marlin/releases) can be found here.
+
+Jjust download the latest firmware.bin and copy it to your SD card. The update is flashed with the next reboot of the printer. It's adviced to save the FIRMWARE.CUR file before flashing. You can restore the previous firmware by renaming this file to firmware.bin and flashing it again.
+
+Two kind of releases are provided:
+ - 2.0.x builds are less frequently updated and can be considered "more mature"
+ - bugfix-2.0.x are changing almost daily and contain the latest fixes and optimizations
+
+Personally, I update to the latest bugifx-2.0.x every couple weeks.
+
+Please be aware that the firmware.bin files provided here are created automatically and are usually not tested (besides the one I download myself and use on my printer). This means I can give no guarantee about the quality or functionality.
+
+As this repository is not actively developed, please open issues at [Marlin](https://github.com/MarlinFirmware/Marlin) or [BigTreeTech's repository](https://github.com/bigtreetech/BIGTREETECH-SKR-mini-E3).
+
+
+
+
+
+
+
+
+
 # Marlin 3D Printer Firmware
 
 ![GitHub](https://img.shields.io/github/license/marlinfirmware/marlin.svg)
