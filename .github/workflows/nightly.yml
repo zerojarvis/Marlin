@@ -10,7 +10,6 @@ jobs:
       fail-fast: false
       matrix:
         branch: [bugfix-2.0.x, 2.0.x]
-
     runs-on: ubuntu-latest
 
     steps:
