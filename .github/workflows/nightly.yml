@@ -26,7 +26,6 @@ jobs:
         git pull https://github.com/MarlinFirmware/Marlin ${{ matrix.branch }}
         git tag -a nightly-${{ matrix.branch }}-$(date '+%Y-%m-%d') -m "Nightly build at $(date '+%Y-%m-%d') on ${{ matrix.branch }}"
         git push --follow-tags
-    - uses: actions/checkout@v2
     - name: Set up Python
       uses: actions/setup-python@v1
       with:
@@ -54,7 +53,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         tag_name: ${{ github.ref }}
-        release_name: ${{ github.ref }}
+        release_name: [${{ matrix.branch }}] Nighly $(date '+%Y-%m-%d')
         draft: false
         prerelease: true
     - name: Upload Release Asset
