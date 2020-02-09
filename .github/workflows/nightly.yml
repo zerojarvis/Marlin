@@ -1,68 +1,75 @@
-name: Nightly Merge
-
-on:
-  schedule:
-    - cron: '0 2 * * *' # run at 2 AM UTC
-
+---
 jobs:
   merge:
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: "Check out ${{ matrix.branch }}"
+        uses: actions/checkout@v2
+        with:
+          ref: "${{ matrix.branch }}"
+      -
+        name: "Merge ${{ matrix.branch }}"
+        run: |
+            git config user.name "${GITHUB_ACTOR}"
+            git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+            git fetch --unshallow
+            git pull https://github.com/MarlinFirmware/Marlin ${{ matrix.branch }}
+            git tag -a nightly-${{ matrix.branch }}-$(date '+%Y-%m-%d') -m "Nightly build at $(date '+%Y-%m-%d') on ${{ matrix.branch }}"
+            git push --follow-tags
+      -
+        name: "Set up Python"
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.8
+      -
+        name: "Install pip"
+        run: "python -m pip install --upgrade pip\n"
+      -
+        name: "Build Marlin"
+        run: |
+            pip install platformio
+            ./buildroot/bin/generate_version
+            platformio run
+            cd .pio/build/STM32F103RC_bigtree_512K/
+            mkdir artifacts
+            mv firmware.bin artifacts/
+      -
+        name: "Upload firmware"
+        uses: actions/upload-artifact@v1.0.0
+        with:
+          name: firmware
+          path: .pio/build/STM32F103RC_bigtree_512K/artifacts
+      -
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+        id: create_release
+        name: "Create Release"
+        uses: actions/create-release@v1
+        with:
+          draft: false
+          prerelease: true
+          release_name: "[${{ matrix.branch }}] Nighly $(date '+%Y-%m-%d')"
+          tag_name: "${{ github.ref }}"
+      -
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+        id: upload-release-asset
+        name: "Upload Release Asset"
+        uses: actions/upload-release-asset@v1.0.1
+        with:
+          asset_content_type: application/zip
+          asset_name: firmware.bin
+          asset_path: .pio/build/STM32F103RC_bigtree_512K/artifacts/firmware.bin
+          upload_url: "${{ steps.create_release.outputs.upload_url }}"
     strategy:
       fail-fast: false
       matrix:
-        branch: [bugfix-2.0.x, 2.0.x]
-
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Check out ${{ matrix.branch }}
-      uses: actions/checkout@v2
-      with:
-        ref: ${{ matrix.branch }}
-    - name: Merge ${{ matrix.branch }}
-      run: |
-        git config user.name "${GITHUB_ACTOR}"
-        git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
-        git fetch --unshallow
-        git pull https://github.com/MarlinFirmware/Marlin ${{ matrix.branch }}
-        git tag -a nightly-${{ matrix.branch }}-$(date '+%Y-%m-%d') -m "Nightly build at $(date '+%Y-%m-%d') on ${{ matrix.branch }}"
-        git push --follow-tags
-    - name: Set up Python
-      uses: actions/setup-python@v1
-      with:
-        python-version: 3.8
-    - name: Install pip
-      run: |
-        python -m pip install --upgrade pip
-    - name: Build Marlin
-      run: |
-        pip install platformio
-        ./buildroot/bin/generate_version
-        platformio run
-        cd .pio/build/STM32F103RC_bigtree_512K/
-        mkdir artifacts
-        mv firmware.bin artifacts/
-    - name: Upload firmware
-      uses: actions/upload-artifact@v1.0.0
-      with:
-        name: firmware
-        path: .pio/build/STM32F103RC_bigtree_512K/artifacts
-    - name: Create Release
-      id: create_release
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: ${{ github.ref }}
-        release_name: [${{ matrix.branch }}] Nighly $(date '+%Y-%m-%d')
-        draft: false
-        prerelease: true
-    - name: Upload Release Asset
-      id: upload-release-asset
-      uses: actions/upload-release-asset@v1.0.1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: .pio/build/STM32F103RC_bigtree_512K/artifacts/firmware.bin
-        asset_name: firmware.bin
-        asset_content_type: application/zip
+        branch:
+          - bugfix-2.0.x
+          - 2.0.x
+name: "Nightly Merge"
+true:
+  schedule:
+    -
+      cron: "0 2 * * *"
