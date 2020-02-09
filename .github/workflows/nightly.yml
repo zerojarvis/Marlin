@@ -52,7 +52,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         tag_name: nightly-${{ matrix.branch }}-$(date '+%Y-%m-%d')
-        release_name: "[${{ matrix.branch }}]" Nighly $(date '+%Y-%m-%d')
+        release_name: (${{ matrix.branch }}) Nighly $(date '+%Y-%m-%d')
         draft: false
         prerelease: true
         body: "[firmware.bin](https://github.com/crysxd/Marlin/releases/download/${{ github.ref }}/firmware.bin)"
