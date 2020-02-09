@@ -2,7 +2,7 @@ name: Nightly Merge
 
 on:
   schedule:
-    - cron: '*/15 * * * *' # run at 2 AM UTC
+    - cron: '0 2 * * *' # run at 2 AM UTC
 
 jobs:
   merge:
