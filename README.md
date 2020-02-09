@@ -18,8 +18,7 @@ Please be aware that the firmware.bin files provided here are created automatica
 
 As this repository is not actively developed, please open issues at [Marlin](https://github.com/MarlinFirmware/Marlin) or [BigTreeTech's repository](https://github.com/bigtreetech/BIGTREETECH-SKR-mini-E3).
 
-
-
+Builds are not oconfigured for BL Touch.
 
 
 
