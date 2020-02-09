@@ -55,6 +55,7 @@ jobs:
         release_name: "[${{ matrix.branch }}] Nighly $(date '+%Y-%m-%d')"
         draft: false
         prerelease: true
+        body: [firmware.bin](https://github.com/crysxd/Marlin/releases/download/${{ github.ref }}/firmware.bin)
     - name: Upload Release Asset
       id: upload-release-asset
       uses: actions/upload-release-asset@v1.0.1
