@@ -23,8 +23,12 @@ jobs:
         git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
         git fetch --unshallow
         git pull https://github.com/MarlinFirmware/Marlin ${{ matrix.branch }}
-        git tag -a nightly-${{ matrix.branch }}-$(date '+%Y-%m-%d') -m "Nightly build at $(date '+%Y-%m-%d') on ${{ matrix.branch }}"
+        TAG_NAME=nightly-${{ matrix.branch }}-$(date '+%Y-%m-%d')
+        git tag -a $TAG_NAME -m "Nightly build at $(date '+%Y-%m-%d') on ${{ matrix.branch }}"
         git push --follow-tags
+        echo "##[set-output name=tag_name;]$TAG_NAME"
+        echo "##[set-output name=date;]$(date '+%Y/%m/%d')"
+      id: merge
     - name: Set up Python
       uses: actions/setup-python@v1
       with:
@@ -51,8 +55,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: nightly-${{ matrix.branch }}-$(date '+%Y-%m-%d')
-        release_name: (${{ matrix.branch }}) Nighly $(date '+%Y-%m-%d')
+        tag_name: ${{ steps.merge.outputs.tag_name }}
+        release_name: (${{ matrix.branch }}) Nighly ${{ steps.merge.outputs.date }}
         draft: false
         prerelease: true
         body: "[firmware.bin](https://github.com/crysxd/Marlin/releases/download/${{ github.ref }}/firmware.bin)"
