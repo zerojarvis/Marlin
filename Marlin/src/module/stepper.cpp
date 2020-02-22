@@ -2587,7 +2587,7 @@ void Stepper::report_positions() {
         #elif CORE_IS_YZ
           BABYSTEP_CORE(Y, Z, BABYSTEP_INVERT_Z, direction, (CORESIGN(1)<0));
         #elif DISABLED(DELTA)
-          BABYSTEP_AXIS(Z, BABYSTEP_INVERT_Z, direction, (CORESIGN(1)<0));
+          BABYSTEP_AXIS(Z, BABYSTEP_INVERT_Z, direction);
 
         #else // DELTA
 
