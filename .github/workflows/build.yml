@@ -21,7 +21,7 @@ jobs:
         pip install platformio
         ./buildroot/bin/generate_version
         platformio run
-        cd .pio/build/STM32F103RC_bigtree_512K/
+        cd .pio/build/STM32F103RC_btt_512K/
         mkdir artifacts
         mv firmware.bin artifacts/
     - name: Upload firmware
