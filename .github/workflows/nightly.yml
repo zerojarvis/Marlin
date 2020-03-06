@@ -41,8 +41,7 @@ jobs:
         pip install platformio
         ./buildroot/bin/generate_version
         platformio run
-        if [ $maxline == "#SystemMaxUse=" ]; then sed 's/\#SystemMaxUse=/SystemMaxUse=50M/g' journald.conf > journald.conf2 && mv journald.conf2 journald.conf; else echo "This file has been edited. You'll need to do it manually."; fi
-        mv .pio/build/STM32F103RC_btt_512K/ .pio/build/STM32F103RC_bigtree_512K || 1
+        if [ -r .pio/build/STM32F103RC_btt_512K/ ]; then mv .pio/build/STM32F103RC_btt_512K/ .pio/build/STM32F103RC_bigtree_512K; fi
         cd .pio/build/STM32F103RC_bigtree_512K/
         mkdir artifacts
         mv firmware.bin artifacts/
