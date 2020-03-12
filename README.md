@@ -1,6 +1,6 @@
 # What does this fork do?
 
-![Nightly Merge](https://github.com/crysxd/Marlin/workflows/Nightly%20Build/badge.svg)
+![Nightly](https://github.com/crysxd/Marlin/workflows/Nightly/badge.svg)
 
 This fork of the Marlin project provides nightly firmware builds for the BigTreeTech SKR mini E3 v1.2 by taking the daily changes of the [Marlin project](https://github.com/MarlinFirmware/Marlin) and building thermal with BigTreeTech's default configuration found [here](https://github.com/bigtreetech/BIGTREETECH-SKR-mini-E3).
 
