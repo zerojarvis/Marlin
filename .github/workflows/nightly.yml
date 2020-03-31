@@ -26,7 +26,7 @@ jobs:
         TAG_NAME=nightly-${{ matrix.branch }}-$(date '+%Y-%m-%d')
         VERSION_NAME=$(less "Marlin/src/inc/Version.h"| grep "#define SHORT_BUILD_VERSION" |  awk -F\" '{ print $2 }')
         git tag -a $TAG_NAME -m "Nightly build at $(date '+%Y-%m-%d') on ${{ matrix.branch }}"
-        if [[${{ matrix.branch }} == "2.0.x"]]; then; git tag -a v$VERSION_NAME -m "Release $VERSION_NAME" || 1; fi;
+        if [[${{ matrix.branch }} == "2.0.x"]]; then git tag -a v$VERSION_NAME -m "Release $VERSION_NAME" || 1; fi
         git push --follow-tags
         echo "##[set-output name=version_name;]$VERSION_NAME"
         echo "##[set-output name=tag_name;]$TAG_NAME"
