@@ -25,8 +25,8 @@ jobs:
         git fetch --unshallow
         git pull https://github.com/MarlinFirmware/Marlin ${{ matrix.branch }}
         VERSION_NAME=$(less "Marlin/src/inc/Version.h"| grep "#define SHORT_BUILD_VERSION" |  awk -F\" '{ print $2 }')
-        TAG_NAME=$(if [[ ${{ matrix.branch }} == "2.0.x" ]]; then echo "v$VERSION_NAME"; else echo "nightly-${{ matrix.branch }}-$(date '+%Y-%m-%d')"; fi)
-        PRERELEASE=$(if [[ ${{ matrix.branch }} == "2.0.x" ]]; then echo false; else echo true; fi)
+        TAG_NAME=$(if [[ "${{ matrix.branch }}" == "2.0.x" ]]; then echo "v$VERSION_NAME"; else echo "nightly-${{ matrix.branch }}-$(date '+%Y-%m-%d')"; fi)
+        PRERELEASE=$(if [[ "${{ matrix.branch }}" == "2.0.x" ]]; then echo false; else echo true; fi)
         TAG_EXISTED=$(if [ $(git tag -l $TAG_NAME) ]; then echo true; else echo false; fi)
         echo "##[set-output name=tag_existed;]$TAG_EXISTED"
         echo "##[set-output name=prerelease;]$PRERELEASE"
