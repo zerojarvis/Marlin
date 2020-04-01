@@ -54,7 +54,8 @@ jobs:
     - name: Create and Push Tag for ${{ matrix.branch }}
       if: steps.merge.outputs.tag_existed == 'false'
       run: |
-        git tag -a "${{ steps.merge.outputs.tag_name }}" -m $(if [[ "${{ steps.merge.outputs.tag_name }}" == v* ]]; then echo "Release ${{ steps.merge.outputs.version_name }}"; else echo "Nightly build at ${{ steps.merge.outputs.date }} on ${{ matrix.branch }}"; fi)
+        MESSAGE=$(if [[ "${{ steps.merge.outputs.tag_name }}" == v* ]]; then echo "Release ${{ steps.merge.outputs.version_name }}"; else echo "Nightly build at ${{ steps.merge.outputs.date }} on ${{ matrix.branch }}"; fi)
+        git tag -a "${{ steps.merge.outputs.tag_name }}" -m $MESSAGE
         git push --follow-tags
     - name: Upload firmware
       if: steps.merge.outputs.tag_existed == 'false'
