@@ -52,11 +52,9 @@ jobs:
         mkdir artifacts
         mv firmware.bin artifacts/
     - name: Create and Push Tag for ${{ matrix.branch }}
-      with:
-        ref: ${{ matrix.branch }}
       if: steps.merge.outputs.tag_existed == 'false'
       run: |
-        git tag -a ${{ steps.merge.outputs.tag_name }} -m $(if [[ ${{ matrix.branch }} == "2.0.x" ]]; then echo "Release ${{ steps.merge.outputs.version_name }}"; else echo "Nightly build at ${{ steps.merge.outputs.date }} on ${{ matrix.branch }}"; fi)
+        git tag -a ${{ steps.merge.outputs.tag_name }} -m $(if [[ ${{ steps.merge.outputs.tag_name }} == v* ]]; then echo "Release ${{ steps.merge.outputs.version_name }}"; else echo "Nightly build at ${{ steps.merge.outputs.date }} on ${{ matrix.branch }}"; fi)
         git push --follow-tags
     - name: Upload firmware
       if: steps.merge.outputs.tag_existed == 'false'
