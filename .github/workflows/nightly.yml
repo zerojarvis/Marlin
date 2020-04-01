@@ -18,35 +18,32 @@ jobs:
       with:
         ref: ${{ matrix.branch }}
     - name: Merge ${{ matrix.branch }}
+      id: merge
       run: |
         git config user.name "${GITHUB_ACTOR}"
         git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
         git fetch --unshallow
         git pull https://github.com/MarlinFirmware/Marlin ${{ matrix.branch }}
-        TAG_NAME=nightly-${{ matrix.branch }}-$(date '+%Y-%m-%d')
         VERSION_NAME=$(less "Marlin/src/inc/Version.h"| grep "#define SHORT_BUILD_VERSION" |  awk -F\" '{ print $2 }')
+        TAG_NAME=$(if [[ ${{ matrix.branch }} == "2.0.x" ]]; then echo "v$VERSION_NAME"; else echo "nightly-${{ matrix.branch }}-$(date '+%Y-%m-%d')"; fi
         PRERELEASE=$(if [[ ${{ matrix.branch }} == "2.0.x" ]]; then echo false; else echo true; fi)
-        git tag -a $TAG_NAME -m "Nightly build at $(date '+%Y-%m-%d') on ${{ matrix.branch }}"
-        VERSION_TAG_EXISTED=if [ $(git tag -l "v$VERSION_NAME") ]; then echo true; else echo false; fi
-        if [[ ${{ matrix.branch }} == "2.0.x" ]]; then git tag -a v$VERSION_NAME -m "Release $VERSION_NAME" || 1; fi
-        git push --follow-tags
-        echo "##[set-output name=version_tag_existed;]$VERSION_TAG_EXISTED"
+        TAG_EXISTED=$(if [ $(git tag -l $TAG_NAME) ]; then echo true; else echo false; fi)
+        echo "##[set-output name=tag_existed;]$TAG_EXISTED"
         echo "##[set-output name=prerelease;]$PRERELEASE"
         echo "##[set-output name=version_name;]$VERSION_NAME"
         echo "##[set-output name=tag_name;]$TAG_NAME"
         echo "##[set-output name=date;]$(date '+%Y/%m/%d')"
-      id: merge
     - name: Set up Python
-      if: steps.merge.outputs.version_tag_existed == 'false'
+      if: steps.merge.outputs.tag_existed == 'false'
       uses: actions/setup-python@v1
       with:
         python-version: 3.8
     - name: Install pip
-      if: steps.merge.outputs.version_tag_existed == 'false'
+      if: steps.merge.outputs.tag_existed == 'false'
       run: |
         python -m pip install --upgrade pip
     - name: Build Marlin
-      if: steps.merge.outputs.version_tag_existed == 'false'
+      if: steps.merge.outputs.tag_existed == 'false'
       run: |
         pip install platformio
         ./buildroot/bin/generate_version
@@ -54,14 +51,21 @@ jobs:
         cd .pio/build/STM32F103RC_btt_512K/
         mkdir artifacts
         mv firmware.bin artifacts/
+    - name: Create and Push Tag for ${{ matrix.branch }}
+      if: steps.merge.outputs.tag_existed == 'false'
+      with:
+        ref: ${{ matrix.branch }}
+      run: |
+        git tag -a ${{ steps.merge.outputs.tag_name }} -m $(if [[ ${{ matrix.branch }} == "2.0.x" ]]; then echo "Release ${{ steps.merge.outputs.version_name }}"; else echo "Nightly build at ${{ steps.merge.outputs.date }} on ${{ matrix.branch }}"; fi)
+        git push --follow-tags
     - name: Upload firmware
-      if: steps.merge.outputs.version_tag_existed == 'false'
+      if: steps.merge.outputs.tag_existed == 'false'
       uses: actions/upload-artifact@v1.0.0
       with:
         name: firmware
         path: .pio/build/STM32F103RC_btt_512K/artifacts
     - name: Create Release
-      if: steps.merge.outputs.version_tag_existed == 'false'
+      if: steps.merge.outputs.tag_existed == 'false'
       id: create_release
       uses: actions/create-release@v1
       env:
@@ -73,7 +77,7 @@ jobs:
         prerelease: ${{ steps.merge.outputs.prerelease }}
         body: "[firmware.bin](https://github.com/crysxd/Marlin/releases/download/${{ github.ref }}/firmware.bin)"
     - name: Upload Release Asset
-      if: steps.merge.outputs.version_tag_existed == 'false'
+      if: steps.merge.outputs.tag_existed == 'false'
       id: upload-release-asset
       uses: actions/upload-release-asset@v1.0.1
       env:
