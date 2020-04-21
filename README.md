@@ -49,13 +49,13 @@ a software like Pronterface or Octoprint to send gcode commands to your printer.
 - Open Pronterface or Octoprint and run `M851 X? Y? Z6` and replace the ? with your X and Y values, e.g `M851 X-2.4 Y11.4 Z6`
 - Go to "Main Menu > Motion > Move Axis > Soft Endstops" to turn them off
 - Place a piece of paper under the nozzle
-- Go to "Main Menu > Motion > Move Axis > Move Z > 0.25mm" and move the nozzle down until you feel a little resistance on the paper while moving it
+- Go to "Main Menu > Motion > Move Axis > Move Z > 0.025mm" and move the nozzle down until you feel a little resistance on the paper while moving it
 - Note down the number on the screen.
 - Subtract the number from 6, e.g. if your screen read -8.54 then you need to do 6-8.54=**-2.54**
 - Open Pronterface or Octoprint and run `M851 Z?` and replace the ? with your calculated value.
 - Open Pronterface or Octoprint and run `M500` to save your settings to EEPROM and make the persist restarts.
 - Home your printer again
-- Go to "Main Menu > Motion > Move Axis > Move Z > 0.25mm" and move it down to 0. The nozzle should now just hover over the bed.
+- Go to "Main Menu > Motion > Move Axis > Move Z > 0.025mm" and move it down to 0. The nozzle should now just hover over the bed.
 - Open Pronterface or Octoprint and run `M48` to run a test of the BLTouch. The terminal will show the results on how precise it works.
 - Open Pronterface or Octoprint and run `G29` to run a bed leveling procedure.
 - Add `G29` to the end of your start gcode in your slicer to run the bed leveling procedure before every print. Alternatively, you can open Pronterface or Octoprint and run `M500` to save the results of your `G29`. You do not need to run the bed leveling routine now before every print, but if your bed changes a little the nozzle will be off.
