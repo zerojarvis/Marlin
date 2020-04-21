@@ -28,7 +28,7 @@ jobs:
         git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
         git fetch --unshallow
         git pull https://github.com/MarlinFirmware/Marlin $MERGE_BRANCH
-        DATE="$(date '+%Y/%m/%d')"
+        DATE="$(date '+%Y-%m-%d')"
         VERSION_NAME=$(less "Marlin/src/inc/Version.h"| grep "#define SHORT_BUILD_VERSION" |  awk -F\" '{ print $2 }')
         VERSION_NAME=$(if [[ "${{ matrix.branch }}" == *"-bltouch" ]]; then echo "${VERSION_NAME}-bltouch"; else echo "$VERSION_NAME"; fi)
         TAG_NAME=$(if [[ "${{ matrix.branch }}" == "2.0.x"* ]]; then echo "v$VERSION_NAME"; else echo "nightly-${{ matrix.branch }}-$DATE"; fi)
