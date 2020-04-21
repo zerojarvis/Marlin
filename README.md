@@ -14,11 +14,51 @@ Two kind of releases are provided:
 
 Personally, I update to the latest bugifx-2.0.x every couple weeks.
 
-Please be aware that the firmware.bin files provided here are created automatically and are usually not tested (besides the one I download myself and use on my printer). This means I can give no guarantee about the quality or functionality.
+Please be aware that the firmware.bin files and guidance provided here are created automatically and are usually not tested (besides the one I download myself and use on my printer). This means I can give no guarantee about the quality or functionality.
 
-As this repository is not actively developed, please open issues at [Marlin](https://github.com/MarlinFirmware/Marlin) or [BigTreeTech's repository](https://github.com/bigtreetech/BIGTREETECH-SKR-mini-E3).
+## BLTouch builds (Coming soon)
 
-Builds are not configured for BL Touch.
+**READ THIS BEFORE DOING ANYTHING!**
+
+The BLTouch builds are configured for following wiring:
+![img](https://camo.githubusercontent.com/56b380ce77969d6bf7e4d627094676b2625dc876/68747470733a2f2f692e696d6775722e636f6d2f42524a516e65392e6a7067)
+
+This means that you replace your Z-Endstop with the BLTouch. The BLTouch is then used for
+Z axis homing instead of the endstop. This has many advantages, e.g. you do not need to
+adjust your Z-Endstop height when adding a glass build plate. Please remove the Z-endstop from your printer to prevent it from colliding with the Z axis.
+
+After flashing the firmware, you need to tell your printer where the BLTouch is relative to your
+nozzle. This will be different depending on your fan duct and or BLTouch holder. The firmware is
+configured for X0 Y0 Z6. This means after homing, your printer will assume it needs to move the nozzle
+up 6mm to print on your surface (it will print mid-air). This is intentionally to prevent damage to your printer in case you miss the next step ;)
+
+To adjust the nozzle offset, use the M851 gcode command. You can find the X and Y values usually
+where you got your BLTouch mount from. The Z value must be calibrated. To set everything up you need to use
+a software like Pronterface or Octoprint to send gcode commands to your printer. If you don't have this or don't want to do this, you can also create a text file, add the commands to it (one per line) and save it as
+`something.gcode` and then "print" it. Perform following steps:
+
+- Copy the firmware.bin to your SD card, insert it and restart the printer
+- The BLTouch should deploy a couple of times when the printer is booting. A little blue LED and a big red one should be lit up afterwards. **If this is not the case (might be different for some clones), double check your wiring and proceed with high caution when homing!**
+- Move the Z axis high up so you have time to react when it homes the Z axis
+- Home all axis
+- When the Z axis moves down, the BLTouch probe should deploy
+- Hold your finger under the probe pin and let it touch your hand. It should retract.
+- The axis will move up, the BLTouch will deploy again. Let it touch your finger again
+- **If the BLTouch does not deploy or the axis does not stop moving down, immediately cut the power to the printer!**
+- If everything worked, home the printer again
+- Open Pronterface or Octoprint and run `M851 X? Y? Z6` and replace the ? with your X and Y values, e.g `M851 X-2.4 Y11.4 Z6`
+- Go to "Main Menu > Motion > Move Axis > Soft Endstops" to turn them off
+- Place a piece of paper under the nozzle
+- Go to "Main Menu > Motion > Move Axis > Move Z > 0.25mm" and move the nozzle down until you feel a little resistance on the paper while moving it
+- Note down the number on the screen.
+- Subtract the number from 6, e.g. if your screen read -8.54 then you need to do 6-8.54=**-2.54**
+- Open Pronterface or Octoprint and run `M851 Z?` and replace the ? with your calculated value.
+- Open Pronterface or Octoprint and run `M500` to save your settings to EEPROM and make the persist restarts.
+- Home your printer again
+- Go to "Main Menu > Motion > Move Axis > Move Z > 0.25mm" and move it down to 0. The nozzle should now just hover over the bed.
+- Open Pronterface or Octoprint and run `M48` to run a test of the BLTouch. The terminal will show the results on how precise it works.
+- Open Pronterface or Octoprint and run `G29` to run a bed leveling procedure.
+- Add `G29` to the end of your start gcode in your slicer to run the bed leveling procedure before every print. Alternatively, you can open Pronterface or Octoprint and run `M500` to save the results of your `G29`. You do not need to run the bed leveling routine now before every print, but if your bed changes a little the nozzle will be off.
 
 
 
