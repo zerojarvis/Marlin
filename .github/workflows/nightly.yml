@@ -22,6 +22,7 @@ jobs:
     - name: Merge ${{ matrix.branch }}
       id: merge
       run: |
+        git fetch --tags --force
         BRANCH=${{ matrix.branch }}
         MERGE_BRANCH=$(printf '%s\n' "${BRANCH//-bltouch/}")
         git config user.name "${GITHUB_ACTOR}"
@@ -36,7 +37,7 @@ jobs:
         TAG_EXISTED=$(if [ $(git tag -l $TAG_NAME) ]; then echo true; else echo false; fi)
         RELEASE_NAME=$(if [[ "${{ matrix.branch }}" == "2.0.x"* ]]; then echo "$VERSION_NAME"; else echo "Nighly Build on ${{ matrix.branch }} ($DATE)"; fi)
         echo "TAG_NAME=$TAG_NAME"
-        echo "TAG_EXISTED=$TAG_EXISTED" 
+        echo "TAG_EXISTED=$TAG_EXISTED"
         echo "##[set-output name=merge_branch_name;]$MERGE_BRANCH"
         echo "##[set-output name=tag_existed;]$TAG_EXISTED"
         echo "##[set-output name=prerelease;]$PRERELEASE"
