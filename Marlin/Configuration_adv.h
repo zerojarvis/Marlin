@@ -688,7 +688,7 @@
 //#define HOME_AFTER_DEACTIVATE  // Require rehoming after steppers are deactivated
 
 // Minimum time that a segment needs to take if the buffer is emptied
-#define DEFAULT_MINSEGMENTTIME        20000   // (ms)
+#define DEFAULT_MINSEGMENTTIME        20000   // (µs)
 
 // Slow down the machine if the look ahead buffer is (by default) half full.
 // Increase the slowdown divisor for larger buffer sizes.
@@ -1299,7 +1299,6 @@
   //#define AO_EXP2_PINMAP      // AlephObjects CLCD UI EXP2 mapping
   //#define CR10_TFT_PINMAP     // Rudolph Riedel's CR10 pin mapping
   //#define S6_TFT_PINMAP       // FYSETC S6 pin mapping
-  //#define CHEETAH_TFT_PINMAP  // FYSETC Cheetah pin mapping
   //#define E3_EXP1_PINMAP      // E3 type boards (SKR E3/DIP, and Stock boards) EXP1 pin mapping
   //#define GENERIC_EXP2_PINMAP // GENERIC EXP2 pin mapping
 
@@ -1696,10 +1695,14 @@
   //#define SERIAL_STATS_DROPPED_RX
 #endif
 
-// Enable an emergency-command parser to intercept certain commands as they
-// enter the serial receive buffer, so they cannot be blocked.
-// Currently handles M108, M112, M410
-// Does not work on boards using AT90USB (USBCON), ESP32, STM32F1/4/7, or Teensy 3.5/3.6 processors!
+/**
+ * Emergency Command Parser
+ *
+ * Add a low-level parser to intercept certain commands as they
+ * enter the serial receive buffer, so they cannot be blocked.
+ * Currently handles M108, M112, M410, M876
+ * NOTE: Not yet implemented for all platforms.
+ */
 //#define EMERGENCY_PARSER
 
 // Bad Serial-connections can miss a received command by sending an 'ok'
