@@ -33,8 +33,7 @@
 
 // Onboard I2C EEPROM
 #define I2C_EEPROM
-#undef E2END
-#define E2END 0x1FFF // EEPROM end address 24C64 (64Kb = 8KB)
+#define MARLIN_EEPROM_SIZE 0x2000                 // 8KB (24C64 ... 64Kb = 8KB)
 
 #define TP                                        // Enable to define servo and probe pins
 
@@ -321,13 +320,13 @@
 
   #if ENABLED(CR10_STOCKDISPLAY)
 
-    #define LCD_PINS_RS                     PA8
+    #define LCD_PINS_RS                     PG6
 
-    #define BTN_EN1                         PD10
-    #define BTN_EN2                         PH10
+    #define BTN_EN1                         PC10
+    #define BTN_EN2                         PG8
 
-    #define LCD_PINS_ENABLE                 PG7
-    #define LCD_PINS_D4                     PG8
+    #define LCD_PINS_ENABLE                 PG5
+    #define LCD_PINS_D4                     PG7
 
     //#undef ST7920_DELAY_1
     //#undef ST7920_DELAY_2
