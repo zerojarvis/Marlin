@@ -86,7 +86,7 @@ jobs:
         release_name: ${{ steps.merge.outputs.release_name }}
         draft: false
         prerelease: ${{ steps.merge.outputs.prerelease }}
-        body: "[firmware.bin](https://github.com/crysxd/Marlin/releases/download/${{ github.ref }}/firmware.bin)"
+        body: "[firmware.bin](https://github.com/drphil3d/Marlin/releases/download/${{ github.ref }}/firmware.bin)"
     - name: Upload Release Asset
       if: steps.merge.outputs.tag_existed == 'false'
       id: upload-release-asset
