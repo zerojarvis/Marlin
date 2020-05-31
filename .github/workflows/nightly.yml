@@ -11,40 +11,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        branch: [bugfix-2.0.x, 2.0.x, bugfix-2.0.x-bltouch]
+        branch: [Printrbot-Play, Printrbot-Play-HB]
     runs-on: ubuntu-latest
 
-    steps:
-    - name: Check out ${{ matrix.branch }}
-      uses: actions/checkout@v2
-      with:
-        ref: ${{ matrix.branch }}
-    - name: Merge ${{ matrix.branch }}
-      id: merge
-      run: |
-        git fetch --tags --force
-        BRANCH=${{ matrix.branch }}
-        MERGE_BRANCH=$(printf '%s\n' "${BRANCH//-bltouch/}")
-        git config user.name "${GITHUB_ACTOR}"
-        git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
-        git fetch --unshallow
-        git pull https://github.com/MarlinFirmware/Marlin $MERGE_BRANCH
-        DATE="$(date '+%Y/%m/%d')"
-        VERSION_NAME=$(less "Marlin/src/inc/Version.h"| grep "#define SHORT_BUILD_VERSION" |  awk -F\" '{ print $2 }')
-        VERSION_NAME=$(if [[ "${{ matrix.branch }}" == *"-bltouch" ]]; then echo "${VERSION_NAME}-bltouch"; else echo "$VERSION_NAME"; fi)
-        TAG_NAME=$(if [[ "${{ matrix.branch }}" == "2.0.x"* ]]; then echo "v$VERSION_NAME"; else echo "nightly-${{ matrix.branch }}-$(date '+%Y/%m/%d')"; fi)
-        PRERELEASE=$(if [[ "${{ matrix.branch }}" == "2.0.x"* ]]; then echo false; else echo true; fi)
-        TAG_EXISTED=$(if [ $(git tag -l $TAG_NAME) ]; then echo true; else echo false; fi)
-        RELEASE_NAME=$(if [[ "${{ matrix.branch }}" == "2.0.x"* ]]; then echo "$VERSION_NAME"; else echo "Nighly Build on ${{ matrix.branch }} ($DATE)"; fi)
-        echo "TAG_NAME=$TAG_NAME"
-        echo "TAG_EXISTED=$TAG_EXISTED"
-        echo "##[set-output name=merge_branch_name;]$MERGE_BRANCH"
-        echo "##[set-output name=tag_existed;]$TAG_EXISTED"
-        echo "##[set-output name=prerelease;]$PRERELEASE"
-        echo "##[set-output name=version_name;]$VERSION_NAME"
-        echo "##[set-output name=tag_name;]$TAG_NAME"
-        echo "##[set-output name=date;]$DATE"
-        echo "##[set-output name=release_name;]$RELEASE_NAME"
     - name: Set up Python
       if: steps.merge.outputs.tag_existed == 'false'
       uses: actions/setup-python@v1
@@ -86,7 +55,7 @@ jobs:
         release_name: ${{ steps.merge.outputs.release_name }}
         draft: false
         prerelease: ${{ steps.merge.outputs.prerelease }}
-        body: "[firmware.bin](https://github.com/crysxd/Marlin/releases/download/${{ github.ref }}/firmware.bin)"
+        body: "[firmware.bin](https://github.com/drphil3d/Marlin/releases/download/${{ github.ref }}/firmware.bin)"
     - name: Upload Release Asset
       if: steps.merge.outputs.tag_existed == 'false'
       id: upload-release-asset
