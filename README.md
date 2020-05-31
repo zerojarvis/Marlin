@@ -1,5 +1,5 @@
 # What does this fork do?
-![Nightly](https://github.com/drphil3d/Marlin/workflows/Nightly/badge.svg)
+![CI](https://github.com/drphil3d/Marlin/workflows/CI/badge.svg?branch=2.0.x)
 
 This fork of the Marlin project provides nightly firmware builds for the BigTreeTech SKR mini E3 v1.2 for Printrbot by taking the daily changes of the [Marlin project](https://github.com/MarlinFirmware/Marlin) and building thermal with BigTreeTech's default configuration found [here](https://github.com/bigtreetech/BIGTREETECH-SKR-mini-E3).
 
