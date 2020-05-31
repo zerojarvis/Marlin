@@ -46,7 +46,7 @@
 /**
  * Defines a generic printer name to be output to the LCD after booting Marlin.
  */
-#define MACHINE_NAME "Printrbot Play 32"
+#define MACHINE_NAME "Printrbot Simple Metal"
 
 /**
  * The SOURCE_CODE_URL is the location where users will find the Marlin Source
@@ -54,7 +54,7 @@
  * has a distinct Github fork— the Source Code URL should just be the main
  * Marlin repository.
  */
-#define SOURCE_CODE_URL "https://github.com/drphil3d/Marlin/tree/Printrbot-Play-HB"
+#define SOURCE_CODE_URL "https://github.com/Printrbot/Adaptrboard/tree/master/Simple%20Metal"
 
 /**
  * Default generic printer UUID.
