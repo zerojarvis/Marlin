@@ -7,16 +7,6 @@ Daily build [firmware.bin](https://github.com/drphil3d/Marlin/releases) can be f
 
 Jjust download the latest firmware.bin and copy it to your SD card. The update is flashed with the next reboot of the printer. It's adviced to save the FIRMWARE.CUR file before flashing. You can restore the previous firmware by renaming this file to firmware.bin and flashing it again.
 
-Two kind of releases are provided:
- - 2.0.x builds are less frequently updated and can be considered "more mature"
- - bugfix-2.0.x are changing almost daily and contain the latest fixes and optimizations
-
-Personally, I update to the latest bugifx-2.0.x every couple weeks.
-
-Please be aware that the firmware.bin files and guidance provided here are created automatically and are usually not tested (besides the one I download myself and use on my printer). This means I can give no guarantee about the quality or functionality.
-
-## BLTouch builds (Coming soon)
-
 **READ THIS BEFORE DOING ANYTHING!**
 
 Builds are configured for stock printrbot hardware
