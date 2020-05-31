@@ -54,7 +54,7 @@
  * has a distinct Github fork— the Source Code URL should just be the main
  * Marlin repository.
  */
-#define SOURCE_CODE_URL "https://github.com/Printrbot/Adaptrboard/tree/master/Play"
+#define SOURCE_CODE_URL "https://github.com/drphil3d/Marlin/tree/Printrbot-Play-HB"
 
 /**
  * Default generic printer UUID.
