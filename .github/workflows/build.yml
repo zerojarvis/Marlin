@@ -31,3 +31,11 @@ jobs:
         name: firmware
         # Directory containing files to upload
         path: .pio/build/LPC1769/artifacts
+    - name: Automatic Releases
+      uses: marvinpinto/action-automatic-releases@v1.0.0
+      with:
+        repo_token: "${{ secrets.GITHUB_TOKEN }}"
+        automatic_release_tag: "SKR-1.4-Turbo"
+        prerelease: false
+        title: "Printrbot Play Heated Bed - Printrboard RevF"
+        files: .pio/build/LPC1769/artifacts/firmware.bin
