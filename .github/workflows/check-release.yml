@@ -29,15 +29,12 @@ jobs:
         name: Printrbot-Play-HB-Printrboard_revF-Marlin_2.0.5.3-firmware
         # Directory containing files to upload
         path: .pio/build/at90usb1286_dfu/artifacts
-    - uses: actions/checkout@master
-    - name: Create release
-      uses: Roang-zero1/github-create-release-action@master
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    - name: Create GitHub release
-      uses: Roang-zero1/github-upload-release-artifacts-action@master
+    - name: Automatic Releases
+      uses: marvinpinto/action-automatic-releases@v1.0.0
       with:
-        args:
-        artifacts/
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        repo_token: "${{ secrets.GITHUB_TOKEN }}"
+        automatic_release_tag: "latest"
+        prerelease: true
+        title: "Development Build"
+        files: |
+          *.hex
