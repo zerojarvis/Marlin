@@ -6,4 +6,5 @@
         prerelease: true
         title: "Printrbot Play HB Printrboard RevF Development Build"
         files: |
-          *.hex
+          firmware.hex
+        id: "automatic_releases"
