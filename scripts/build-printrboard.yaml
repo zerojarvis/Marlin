@@ -1,0 +1,6 @@
+pip install platformio
+./buildroot/bin/generate_version
+platformio run
+cd .pio/build/at90usb1286_dfu/
+mkdir artifacts
+mv firmware.hex artifacts/

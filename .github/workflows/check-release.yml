@@ -1,5 +1,5 @@
 name: Check & Release
-on: [push, pull_request]
+on: [push]
 
 jobs:
   build:
@@ -20,9 +20,9 @@ jobs:
         platformio run
         cd .pio/build/at90usb1286_dfu/
         mkdir artifacts
-        mv firmware.hex artifacts/
+        cp firmware.hex artifacts/
 
-    - name: Upload firmware
+   - name: Upload firmware
       uses: actions/upload-artifact@v1.0.0
       with:
         # Artifact name
@@ -30,29 +30,12 @@ jobs:
         # Directory containing files to upload
         path: .pio/build/at90usb1286_dfu/artifacts
 
-    - name: Create a Release
-      uses: actions/create-release@v1
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          body: |
-            Changes in this Release
-            - Increased Probing Accuracy
-            - Size Optimization
-          draft: false
-          prerelease: true
-          #id:
-          #html_url:
-          #upload_url:
-
-    - name: Upload Release Asset
-        id: upload-release-asset 
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
-          asset_path: artifacts/firmware.hex
-          asset_name: Printrbot-Play-HB-Printrboard_revF-Marlin_2.0.5.3.hex
-          asset_content_type: firmware
+    - name: Automatic Releases
+      uses: marvinpinto/action-automatic-releases@v1.0.0
+      with:
+        repo_token: "${{ secrets.GITHUB_TOKEN }}"
+        automatic_release_tag: "latest"
+        prerelease: true
+        title: "Printrbot Play HB Printrboard RevF Development Build"
+        files: .pio/build/at90usb1286_dfu/artifacts
+        id: "automatic_releases"
