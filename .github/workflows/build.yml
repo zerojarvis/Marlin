@@ -37,5 +37,5 @@ jobs:
         repo_token: "${{ secrets.GITHUB_TOKEN }}"
         automatic_release_tag: "SKR-1.4-Turbo"
         prerelease: false
-        title: "Printrbot Play Heated Bed - Printrboard RevF"
+        title: "Printrbot Metal Plus - SKR 1.4 Turbo"
         files: .pio/build/LPC1769/artifacts/firmware.bin
