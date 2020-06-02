@@ -31,9 +31,17 @@ jobs:
         name: Printrbot-Play-HB-Printrboard_revF-Marlin_2.0.5.3-firmware
         # Directory containing files to upload
         path: .pio/build/at90usb1286_dfu/artifacts
-   - name: Release
+on: push
+name: Build and release on push
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Release
         uses: fnkr/github-action-ghr@v1
         if: startsWith(github.ref, 'refs/tags/')
         env:
-          GHR_PATH: .pio/build/at90usb1286_dfu/artifacts
+          GHR_COMPRESS:
+          GHR_PATH: build/
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
