@@ -21,7 +21,7 @@ jobs:
         platformio run
         cd .pio/build/at90usb1286_dfu/
         mkdir artifacts
-        cp firmware.hex artifacts/
+        mv firmware.hex artifacts/
     - name: Upload firmware
       uses: actions/upload-artifact@v1.0.0
       with:
@@ -33,7 +33,7 @@ jobs:
       uses: marvinpinto/action-automatic-releases@v1.0.0
       with:
         repo_token: "${{ secrets.GITHUB_TOKEN }}"
-        automatic_release_tag: "Printrboard-RevF-Simple Metal HB Extended"
+        automatic_release_tag: "Printrboard-RevF-Simple Metal-HB-Extended"
         prerelease: false
         title: "Printrbot Simple Metal Heated Bed Extended - Printrboard RevF"
         files: .pio/build/at90usb1286_dfu/artifacts/firmware.hex
