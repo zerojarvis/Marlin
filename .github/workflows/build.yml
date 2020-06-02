@@ -33,7 +33,7 @@ jobs:
       uses: marvinpinto/action-automatic-releases@v1.0.0
       with:
         repo_token: "${{ secrets.GITHUB_TOKEN }}"
-        automatic_release_tag: "Printrboard-RevF-Play"
-        prerelease: true
+        automatic_release_tag: "Printrboard-RevF-PlayHB"
+        prerelease: false
         title: "Printrbot Play Heated Bed - Printrboard RevF"
-        files: artifacts/
+        files: .pio/build/at90usb1286_dfu/artifacts/firmware.hex
