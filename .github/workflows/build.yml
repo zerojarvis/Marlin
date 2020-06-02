@@ -26,14 +26,14 @@ jobs:
       uses: actions/upload-artifact@v1.0.0
       with:
         # Artifact name
-        name: Printrbot-Simple-Metal-Printrboard_RevF-Marlin_2.0.5.3-firmware
+        name: Printrbot-Simple-Metal-Heated-Bed-ExtendedPrintrboard_RevF-Marlin_2.0.5.3-firmware
         # Directory containing files to upload
         path: .pio/build/at90usb1286_dfu/artifacts
     - name: Automatic Releases
       uses: marvinpinto/action-automatic-releases@v1.0.0
       with:
         repo_token: "${{ secrets.GITHUB_TOKEN }}"
-        automatic_release_tag: "Printrboard-RevF-Simple Metal HB"
+        automatic_release_tag: "Printrboard-RevF-Simple Metal HB Extended"
         prerelease: false
-        title: "Printrbot Simple Metal Heated Bed - Printrboard RevF"
+        title: "Printrbot Simple Metal Heated Bed Extended - Printrboard RevF"
         files: .pio/build/at90usb1286_dfu/artifacts/firmware.hex
