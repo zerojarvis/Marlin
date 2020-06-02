@@ -31,3 +31,11 @@ jobs:
         name: firmware
         # Directory containing files to upload
         path: .pio/build/STM32F103RC_btt_512K/artifacts
+            - name: Automatic Releases
+      uses: marvinpinto/action-automatic-releases@v1.0.0
+      with:
+        repo_token: "${{ secrets.GITHUB_TOKEN }}"
+        automatic_release_tag: "Printrbot-Play-HB"
+        prerelease: false
+        title: "Printrbot Play - SKR Mini e3 Heated Bed"
+        files: .pio/build/STM32F103RC_btt_512K/artifacts/firmware.bin
