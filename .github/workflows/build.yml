@@ -33,7 +33,7 @@ jobs:
       uses: marvinpinto/action-automatic-releases@v1.0.0
       with:
         repo_token: "${{ secrets.GITHUB_TOKEN }}"
-        automatic_release_tag: "Printrboard-RevF-Simple Metal HB"
+        automatic_release_tag: "Printrboard-RevF-Simple-Metal-HB"
         prerelease: false
         title: "Printrbot Simple Metal Heated Bed - Printrboard RevF"
         files: .pio/build/at90usb1286_dfu/artifacts/firmware.hex
