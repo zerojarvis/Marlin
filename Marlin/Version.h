@@ -41,12 +41,12 @@
  * here we define this default string as the date where the latest release
  * version was tagged.
  */
-#define STRING_DISTRIBUTION_DATE "2020-05-28"
+#define STRING_DISTRIBUTION_DATE "2020-05-24"
 
 /**
  * Defines a generic printer name to be output to the LCD after booting Marlin.
  */
-#define MACHINE_NAME "Printrbot Play 32"
+#define MACHINE_NAME "Printrbot Metal Plus Turbo"
 
 /**
  * The SOURCE_CODE_URL is the location where users will find the Marlin Source
@@ -54,7 +54,7 @@
  * has a distinct Github fork— the Source Code URL should just be the main
  * Marlin repository.
  */
-#define SOURCE_CODE_URL "https://github.com/Printrbot/Adaptrboard/tree/master/Play"
+#define SOURCE_CODE_URL "https://github.com/drphil3d/Marlin/tree/SKR-1.4"
 
 /**
  * Default generic printer UUID.
@@ -65,7 +65,7 @@
  * The WEBSITE_URL is the location where users can get more information such as
  * documentation about a specific Marlin release.
  */
-#define WEBSITE_URL "https://printrbot.github.io/Adaptrboard/"
+#define WEBSITE_URL "https://printrbot.github.io/Adaptrboard"
 
 /**
  * Set the vendor info the serial USB interface, if changable
