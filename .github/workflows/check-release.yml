@@ -1,9 +1,7 @@
-name: CI
-
-on: [push]
-
+name: Check & Release
+on: [push, pull_request]
 jobs:
-  build:
+  build: build
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -21,7 +19,7 @@ jobs:
         platformio run
         cd .pio/build/at90usb1286_dfu/
         mkdir artifacts
-        mv firmware.hex artifacts/
+        cp firmware.hex artifacts/
     - name: Upload firmware
       uses: actions/upload-artifact@v1.0.0
       with:
@@ -29,3 +27,19 @@ jobs:
         name: Printrbot-Play-HB-Printrboard_revF-Marlin_2.0.5.3-firmware
         # Directory containing files to upload
         path: .pio/build/at90usb1286_dfu/artifacts
+  release:
+    runs-on: ubuntu-latest
+    needs: [build]
+    steps:
+    - uses: actions/checkout@master
+    - name: Create release
+      uses: Roang-zero1/github-create-release-action@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Create GitHub release
+      uses: Roang-zero1/github-upload-release-artifacts-action@master
+      with:
+        args:
+        - .pio/build/at90usb1286_dfu/artifacts
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
