@@ -21,7 +21,7 @@ jobs:
         platformio run
         cd .pio/build/at90usb1286_dfu/
         mkdir artifacts
-        mv firmware.hex artifacts/
+        cp firmware.hex artifacts/
     - name: Upload firmware
       uses: actions/upload-artifact@v1.0.0
       with:
@@ -29,13 +29,11 @@ jobs:
         name: Printrbot-Play-HB-Printrboard_revF-Marlin_2.0.5.3-firmware
         # Directory containing files to upload
         path: .pio/build/at90usb1286_dfu/artifacts
-
     - name: Automatic Releases
       uses: marvinpinto/action-automatic-releases@v1.0.0
       with:
         repo_token: "${{ secrets.GITHUB_TOKEN }}"
-        automatic_release_tag: "latest"
+        automatic_release_tag: "Printrboard-RevF-Play"
         prerelease: true
-        title: "Printrbot Play HB Printrboard RevF Development Build"
-        files: .pio/build/at90usb1286_dfu/artifacts
-        id: "automatic_releases"
+        title: "Printrbot Play Heated Bed - Printrboard RevF"
+        files: artifacts/
