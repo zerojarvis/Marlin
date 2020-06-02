@@ -3,6 +3,7 @@ name: CI
 on: [push]
 
 jobs:
+  job1:
   build:
     runs-on: ubuntu-latest
     steps:
@@ -29,3 +30,10 @@ jobs:
         name: Printrbot-Play-HB-Printrboard_revF-Marlin_2.0.5.3-firmware
         # Directory containing files to upload
         path: .pio/build/at90usb1286_dfu/artifacts
+    - name: Upload release
+      uses: yakuhzi/action-release@v1
+      with:
+        file: artifacts/
+     #changelog: /path/to/CHANGELOG.txt
+        env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
