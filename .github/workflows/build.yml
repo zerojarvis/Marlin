@@ -23,7 +23,7 @@ jobs:
         platformio run
         cd .pio/build/STM32F103RC_btt_512K/
         mkdir artifacts
-        mv firmware.bin artifacts/
+        cp firmware.bin artifacts/
     - name: Upload firmware
       uses: actions/upload-artifact@v1.0.0
       with:
@@ -31,3 +31,12 @@ jobs:
         name: firmware
         # Directory containing files to upload
         path: .pio/build/STM32F103RC_btt_512K/artifacts
+    - name: Automatic Releases
+      uses: marvinpinto/action-automatic-releases@v1.0.0
+      with:
+        repo_token: "${{ secrets.GITHUB_TOKEN }}"
+        automatic_release_tag: "Simple-Metal-SKR-Mini-e3"
+        prerelease: false
+        title: "Printrbot Simple Metal SKR Mini E3 v1.2"
+        files: .pio/build/at90usb1286_dfu/artifacts/firmware.hex
+
