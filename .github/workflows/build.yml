@@ -38,5 +38,5 @@ jobs:
         automatic_release_tag: "Simple-Metal-SKR-Mini-e3"
         prerelease: false
         title: "Printrbot Simple Metal SKR Mini E3 v1.2"
-        files: .pio/build/at90usb1286_dfu/artifacts/firmware.hex
+        files: .pio/build/STM32F103RC_btt_512K/artifacts/firmware.bin
 
