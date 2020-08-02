@@ -132,7 +132,7 @@
 #endif
 
 // Name displayed in the LCD "Ready" message and Info menu
-#define CUSTOM_MACHINE_NAME "Printrbot Simple Metal UBL"
+#define CUSTOM_MACHINE_NAME "Printrbot Simple Metal UBL E3DV6"
 
 // Printer's unique ID, used by some programs to differentiate between machines.
 // Choose your own or use a service like http://www.uuidgenerator.net/version4
@@ -484,9 +484,9 @@
   // If you are using a pre-configured hotend then you can use one of the value sets by uncommenting it
 
   // Ultimaker
-  #define DEFAULT_Kp 40.15
-  #define DEFAULT_Ki 7.10
-  #define DEFAULT_Kd 56.73
+  #define DEFAULT_Kp 30.0
+  #define DEFAULT_Ki 2.80
+  #define DEFAULT_Kd 77.0
 
   // MakerGear
   //#define DEFAULT_Kp 7.0
